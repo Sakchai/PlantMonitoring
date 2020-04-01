@@ -106,8 +106,9 @@ namespace Plant.Model
         /// <returns>Queryable source</returns>
         public virtual ITable<TEntity> GetTable<TEntity>() where TEntity : BaseEntity
         {
-            return new DataContext(new OracleDataProvider("OracleManaged"), CurrentConnectionString) { MappingSchema = AdditionalSchema }
-                .GetTable<TEntity>();
+            return new DataContext(new OracleDataProvider("OracleManaged"), CurrentConnectionString).GetTable<TEntity>();
+            //return new DataContext(new OracleDataProvider("OracleManaged"), CurrentConnectionString) { MappingSchema = AdditionalSchema }
+            //    .GetTable<TEntity>();
 
             //return new DataContext(LinqToDbDataProvider, CurrentConnectionString) {MappingSchema = AdditionalSchema}
             //    .GetTable<TEntity>();
@@ -123,9 +124,8 @@ namespace Plant.Model
         {
             using (var dataContext = CreateDataConnection())
             {
-                //  entity.Id = dataContext.InsertWithInt32Identity(entity);
-                //  return entity;
-                return null;
+                entity.Id = dataContext.InsertWithInt32Identity(entity);
+                return entity;
             }
         }
 
@@ -166,9 +166,9 @@ namespace Plant.Model
         {
             using (var dataContext = CreateDataConnection())
             {
-                //dataContext.GetTable<TEntity>()
-                //    .Where(e => e.Id.In(entities.Select(x => x.Id)))
-                //    .Delete();
+                dataContext.GetTable<TEntity>()
+                    .Where(e => e.Id.In(entities.Select(x => x.Id)))
+                    .Delete();
 
             }
         }

@@ -8,7 +8,7 @@ namespace Plant.Model
     public class Student : BaseEntity
     {
         [Column("STUID"), PrimaryKey, Identity]
-        public int Id { get; set; }
+        public override int Id { get; set; }
         [Column("FIRSTNAME", Length = 40), Nullable]
         public string FirstName { get; set; }
         [Column("SURNAME", Length = 40), Nullable]

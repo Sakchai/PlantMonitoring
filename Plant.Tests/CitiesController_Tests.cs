@@ -37,9 +37,9 @@ namespace WorldCities.Tests
             #region Act
             using (var context = new ApplicationDbContext(options))
             {
-                var controller = new CitiesController(context);
-                city_existing = (await controller.GetCity(1)).Value;
-                city_notExisting = (await controller.GetCity(2)).Value;
+                //var controller = new CitiesController(context);
+                //city_existing = (await controller.GetCity(1)).Value;
+                //city_notExisting = (await controller.GetCity(2)).Value;
             }
             #endregion
 

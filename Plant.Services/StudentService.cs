@@ -71,11 +71,11 @@ namespace Plant.Services
 
         public Student GetStudentByID(int id)
         {
-            if (id != 0)
+            if (id == 0)
                 return null;
 
-            var query = _studentRepository.Table;
-            return query.Where(x => x.Id == id).FirstOrDefault();
+            return _studentRepository.GetById(id);
+
         }
 
 

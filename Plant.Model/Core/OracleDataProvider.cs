@@ -203,7 +203,7 @@ namespace Plant.Model
             using var currentConnection = CreateDataConnection();
             var tableName = currentConnection.GetTable<T>().TableName;
 
-            var result = currentConnection.Query<decimal?>($"SELECT IDENT_CURRENT('[{tableName}]') as Value")
+            var result = currentConnection.Query<decimal?>($"SELECT SIDENTITY_'{tableName}'.NEXTVAL as Value from DUAL")
                 .FirstOrDefault();
 
             return result.HasValue ? Convert.ToInt32(result) : 1;
@@ -223,7 +223,7 @@ namespace Plant.Model
 
             var tableName = currentConnection.GetTable<T>().TableName;
 
-            currentConnection.Execute($"DBCC CHECKIDENT([{tableName}], RESEED, {ident})");
+            currentConnection.Execute($"CREATE SEQUENCE SIDENTITY_{tableName}");
         }
 
         /// <summary>

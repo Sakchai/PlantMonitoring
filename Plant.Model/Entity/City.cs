@@ -1,55 +1,53 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WorldCities.Data.Models
+namespace Plant.Model
 {
-    public class City
+    [Table("CITY")]
+    public class City : BaseEntity
     {
         #region Constructor
-        public City()
-        {
 
-        }
         #endregion
 
         #region Properties
         /// <summary>
         /// The unique id and primary key for this City
         /// </summary>
-        [Key]
-        [Required]
-        public int Id { get; set; }
+        [Column("ID"), PrimaryKey, Identity]
+        public override int Id { get; set; }
 
         /// <summary>
         /// City name (in UTF8 format)
         /// </summary>
+        [Column("Name", Length = 40), Nullable]
         public string Name { get; set; }
 
         /// <summary>
         /// City name (in ASCII format)
         /// </summary>
+        [Column("NAME_ASCII", Length = 40), Nullable]
         public string Name_ASCII { get; set; }
 
         /// <summary>
         /// City latitude
         /// </summary>
-        [Column(TypeName = "decimal(7,4)")]
-        public decimal Lat { get; set; }
+        [Column("LAT",DbType = "decimal(7,4)"), NotNull]
+        public decimal Latitude { get; set; }
 
         /// <summary>
         /// City longitude
         /// </summary>
-        [Column(TypeName = "decimal(7,4)")]
-        public decimal Lon { get; set; }
+        [Column("LON",DbType = "decimal(7,4)"), NotNull]
+        public decimal Longitude { get; set; }
 
         /// <summary>
         /// Country Id (foreign key)
         /// </summary>
-        [ForeignKey("Country")]
+        [Column("COUNTRYID"), NotNull]
         public int CountryId { get; set; }
         #endregion
 

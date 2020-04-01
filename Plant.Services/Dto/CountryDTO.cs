@@ -1,10 +1,9 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WorldCities.Data
+namespace Plant.Data
 {
     public class CountryDTO
     {
-        public CountryDTO() { }
 
         #region Properties
         public int Id { get; set; }

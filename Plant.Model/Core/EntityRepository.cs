@@ -39,8 +39,7 @@ namespace Plant.Model
         /// <returns>Entity</returns>
         public virtual TEntity GetById(object id)
         {
-            //return Entities.FirstOrDefault(e => e.Id == Convert.ToInt32(id));
-            return null;
+            return Entities.FirstOrDefault(e => e.Id == Convert.ToInt32(id));
         }
 
         /// <summary>
@@ -79,9 +78,8 @@ namespace Plant.Model
         /// <returns>Copy of the passed entity</returns>
         public virtual TEntity LoadOriginalCopy(TEntity entity)
         {
-            //return _dataProvider.GetTable<TEntity>()
-            //    .FirstOrDefault(e => e.Id == Convert.ToInt32(entity.Id));
-            return null;
+            return _dataProvider.GetTable<TEntity>()
+                .FirstOrDefault(e => e.Id == Convert.ToInt32(entity.Id));
         }
 
         /// <summary>

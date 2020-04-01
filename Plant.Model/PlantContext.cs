@@ -17,7 +17,8 @@ namespace Plant.Model
         }
 
         public virtual DbSet<Student> Students { get; set; }
-
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +29,8 @@ namespace Plant.Model
         {
 
             modelBuilder.Entity<Student>();
-
+            modelBuilder.Entity<City>();
+            modelBuilder.Entity<Country>();
             OnModelCreatingPartial(modelBuilder);
         }
 

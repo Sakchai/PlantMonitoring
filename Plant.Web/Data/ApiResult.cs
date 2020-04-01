@@ -7,7 +7,7 @@ using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-namespace WorldCities.Data
+namespace Plant.Data
 {
     public class ApiResult<T>
     {
@@ -50,8 +50,9 @@ namespace WorldCities.Data
         /// A object containing the IQueryable paged/sorted/filtered result 
         /// and all the relevant paging/sorting/filtering navigation info.
         /// </returns>
-        public static async Task<ApiResult<T>> CreateAsync(
-            IQueryable<T> source,
+        public static ApiResult<T> CreateAsync(
+            //IQueryable<T> source,
+            IList<T> source,
             int pageIndex,
             int pageSize,
             string sortColumn = null,
@@ -59,50 +60,50 @@ namespace WorldCities.Data
             string filterColumn = null,
             string filterQuery = null)
         {
-            if (!String.IsNullOrEmpty(filterColumn)
-                && !String.IsNullOrEmpty(filterQuery)
-                && IsValidProperty(filterColumn))
-            {
-                source = source.Where(
-                    String.Format("{0}.Contains(@0)",
-                    filterColumn),
-                    filterQuery);
-            }
+            //if (!String.IsNullOrEmpty(filterColumn)
+            //    && !String.IsNullOrEmpty(filterQuery)
+            //    && IsValidProperty(filterColumn))
+            //{
+            //    source = source.Where(
+            //        String.Format("{0}.Contains(@0)",
+            //        filterColumn),
+            //        filterQuery);
+            //}
 
-            var count = await source.CountAsync();
+            //var count = await source.CountAsync();
 
-            if (!String.IsNullOrEmpty(sortColumn)
-                && IsValidProperty(sortColumn))
-            {
-                sortOrder = !String.IsNullOrEmpty(sortOrder)
-                    && sortOrder.ToUpper() == "ASC"
-                    ? "ASC"
-                    : "DESC";
-                source = source.OrderBy(
-                    String.Format(
-                        "{0} {1}",
-                        sortColumn,
-                        sortOrder)
-                    );
-            }
+            //if (!String.IsNullOrEmpty(sortColumn)
+            //    && IsValidProperty(sortColumn))
+            //{
+            //    sortOrder = !String.IsNullOrEmpty(sortOrder)
+            //        && sortOrder.ToUpper() == "ASC"
+            //        ? "ASC"
+            //        : "DESC";
+            //    source = source.OrderBy(
+            //        String.Format(
+            //            "{0} {1}",
+            //            sortColumn,
+            //            sortOrder)
+            //        );
+            //}
 
-            source = source
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize);
+            //source = source
+            //    .Skip(pageIndex * pageSize)
+            //    .Take(pageSize);
 
-            // retrieve the SQL query (for debug purposes)
-            #if DEBUG
-            {
-                var sql = source.ToSql();
-                // do something with the sql string
-            }
-            #endif
+            //// retrieve the SQL query (for debug purposes)
+            //#if DEBUG
+            //{
+            //    var sql = source.ToSql();
+            //    // do something with the sql string
+            //}
+            //#endif
 
-            var data = await source.ToListAsync();
+          //  var data = await source.ToListAsync();
 
             return new ApiResult<T>(
-                data,
-                count,
+                source.ToList(),
+                source.Count,
                 pageIndex,
                 pageSize,
                 sortColumn,

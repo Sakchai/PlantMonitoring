@@ -1,14 +1,14 @@
-﻿using System;
+﻿using LinqToDB.Mapping;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace WorldCities.Data.Models
+namespace Plant.Model
 {
-    public class Country
+    [Table("COUNTRY")]
+    public class Country : BaseEntity
     {
         #region Constructor
         public Country()
@@ -21,25 +21,27 @@ namespace WorldCities.Data.Models
         /// <summary>
         /// The unique id and primary key for this Country
         /// </summary>
-        [Key]
-        [Required]
-        public int Id { get; set; }
+        [Column("ID"), PrimaryKey, Identity]
+        public override int Id { get; set; }
 
         /// <summary>
         /// Country name (in UTF8 format)
         /// </summary>
+        [Column("NAME", Length = 40), Nullable]
         public string Name { get; set; }
 
         /// <summary>
         /// Country code (in ISO 3166-1 ALPHA-2 format)
         /// </summary>
         [JsonPropertyName("iso2")]
+        [Column("ISO2", Length = 40), Nullable]
         public string ISO2 { get; set; }
 
         /// <summary>
         /// Country code (in ISO 3166-1 ALPHA-3 format)
         /// </summary>
         [JsonPropertyName("iso3")]
+        [Column("ISO3", Length = 40), Nullable]
         public string ISO3 { get; set; }
         #endregion
 
@@ -47,7 +49,7 @@ namespace WorldCities.Data.Models
         /// <summary>
         /// The number of cities related to this country.
         /// </summary>
-        [NotMapped]
+        [NotColumn]
         public int TotCities
         {
             get

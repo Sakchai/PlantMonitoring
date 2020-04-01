@@ -1,8 +1,7 @@
-﻿namespace WorldCities.Data
+﻿namespace Plant.Data
 {
     public class CityDTO
     {
-        public CityDTO() { }
 
         public int Id { get; set; }
 
