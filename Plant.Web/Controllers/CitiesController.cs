@@ -37,21 +37,7 @@ namespace Plant.Controllers
                 string filterColumn = null,
                 string filterQuery = null)
         {
-            var cities = _cityService.GetAllCities(string.Empty, string.Empty, 0, pageIndex, pageSize, false);
-
-            var data = new List<CityDTO>();
-            foreach (var c in cities)
-            {
-                data.Add(new CityDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Lat = c.Latitude,
-                    Lon = c.Longitude,
-                    CountryId = c.CountryId,
-                    CountryName = c.Country != null ? c.Country.Name : string.Empty
-                });;
-            };
+            var data = _cityService.GetAllCities(pageIndex, pageSize, sortColumn, sortOrder, filterColumn, filterQuery).ToList();
 
             return ApiResult<CityDTO>.CreateAsync(
                     data,

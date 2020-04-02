@@ -1,3 +1,4 @@
+using Plant.Data;
 using Plant.Model;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,8 @@ namespace Plant.Services
 
         City GetCityByID(int id);
 
-        IPagedList<City> GetAllCities(string Name = null,string countryName = null,
-            int countryId = 0,
-            int pageIndex = 0, int pageSize = int.MaxValue,
-            bool showHidden = false);
+        IPagedList<CityDTO> GetAllCities(int pageIndex = 0, int pageSize = int.MaxValue,
+            string sortColumn = null, string sortOrder = null, string filterColumn = null, string filterQuery = null);
 
         IList<City> GetCitysList();
         /// <summary>

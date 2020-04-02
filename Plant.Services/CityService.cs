@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Plant.Data;
 using Plant.Model;
 
 namespace Plant.Services
@@ -88,23 +89,37 @@ namespace Plant.Services
             return query.ToList();
         }
 
-        public IPagedList<City> GetAllCities(string Name = null, string countryName = null, int countryId = 0, 
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+        public IPagedList<CityDTO> GetAllCities(int pageIndex = 0, int pageSize = int.MaxValue, 
+            string sortColumn = null,string sortOrder = null,string filterColumn = null,string filterQuery = null)
         {
             var query = _cityRepository.Table;
-            if (!string.IsNullOrWhiteSpace(Name))
-                query = query.Where(a => a.Name.Contains(Name));
 
-            if (countryId != 0)
-                query = query.Where(a => a.CountryId == countryId);
+            if (!string.IsNullOrWhiteSpace(filterColumn) && (!string.IsNullOrWhiteSpace(filterQuery)))
+            {
+                if (filterColumn.Equals("name"))
+                    query = query.Where(x => x.Name.Contains(filterQuery));
+            }
 
-            if (!string.IsNullOrWhiteSpace(countryName))
-                query = from cty in query
-                                join cn in _countryRepository.Table on cty.CountryId equals cn.Id
-                                where cn.Name.Contains(countryName)
-                                select cty;
-            query = query.OrderBy(x => x.Name);
-            var cities = new PagedList<City>(query, pageIndex, pageSize);
+            if (!string.IsNullOrWhiteSpace(sortColumn) && (!string.IsNullOrWhiteSpace(sortOrder)))
+            {
+                if (sortColumn.Equals("name"))
+                    if (sortOrder.Equals("asc"))
+                        query = query.OrderBy(x => x.Name);
+                    else
+                        query = query.OrderByDescending(x => x.Name);
+
+            }
+            var cityDTOs = query.Select(x => new CityDTO
+            {
+                Id = x.Id,
+                CountryId = x.CountryId,
+                CountryName = _countryRepository.GetById(x.CountryId).Name,
+                Lat = x.Latitude,
+                Lon = x.Longitude,
+                Name = x.Name,
+                Name_ASCII = x.Name_ASCII
+            });
+            var cities = new PagedList<CityDTO>(cityDTOs, pageIndex, pageSize);
             return cities;
         }
 
