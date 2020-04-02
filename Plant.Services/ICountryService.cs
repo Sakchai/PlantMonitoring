@@ -17,9 +17,9 @@ namespace Plant.Services
 
         Country GetCountryByID(int id);
 
-        IPagedList<Country> GetAllCountries(string name = null, string iso2 = null, string iso3 = null,
-            int pageIndex = 0, int pageSize = int.MaxValue,
-            bool showHidden = false);
+        IPagedList<Country> GetAllCountries(int pageIndex = 0, int pageSize = int.MaxValue,
+            string sortColumn = null, string sortOrder = null , string filterColumn = null, 
+            string filterQuery = null);
 
         IList<Country> GetCountrysList();
         /// <summary>

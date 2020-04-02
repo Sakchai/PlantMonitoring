@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using System.IO;
+using Plant.Services;
+using Autofac;
 
 namespace Plant
 {
@@ -17,6 +19,7 @@ namespace Plant
         public static void Main(string[] args)
         {
             //CreateWebHostBuilder(args).Build().Run();
+
 
             var host = Host.CreateDefaultBuilder(args)
                         .UseServiceProviderFactory(new AutofacServiceProviderFactory())
@@ -28,6 +31,9 @@ namespace Plant
                             .UseStartup<Startup>();
                             })
                         .Build();
+
+
+
 
             host.Run();
         }

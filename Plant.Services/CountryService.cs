@@ -86,21 +86,37 @@ namespace Plant.Services
             return query.ToList();
         }
 
-        public IPagedList<Country> GetAllCountries(string name = null, string iso2 = null, string iso3 = null, 
-            int pageIndex = 0, int pageSize = int.MaxValue, bool showHidden = false)
+        public IPagedList<Country> GetAllCountries(int pageIndex = 0, int pageSize = int.MaxValue, string sortColumn = null, 
+            string sortOrder = null, string filterColumn = null,string filterQuery = null)
         {
             var query = _countryRepository.Table;
 
-            if (!string.IsNullOrWhiteSpace(name))
-                query = query.Where(x => x.Name.Contains(name));
+            if (!string.IsNullOrWhiteSpace(filterColumn) && (!string.IsNullOrWhiteSpace(filterQuery)))
+            {
+                if (filterColumn.Equals("name"))
+                    query = query.Where(x => x.Name.Contains(filterQuery));
+            }
 
-            if (!string.IsNullOrWhiteSpace(iso2))
-                query = query.Where(x => x.ISO2.Contains(iso2));
-
-            if (!string.IsNullOrWhiteSpace(iso3))
-                query = query.Where(x => x.ISO3.Contains(iso3));
-
-            query = query.OrderBy(x => x.Name);
+            if (!string.IsNullOrWhiteSpace(sortColumn) && (!string.IsNullOrWhiteSpace(sortOrder)))
+            {
+                if (sortColumn.Equals("name"))
+                    if (sortOrder.Equals("asc"))
+                        query = query.OrderBy(x => x.Name);
+                    else
+                        query = query.OrderByDescending(x => x.Name);
+                
+                if (sortColumn.Equals("iso2"))
+                    if (sortOrder.Equals("asc"))
+                        query = query.OrderBy(x => x.ISO2);
+                    else
+                        query = query.OrderByDescending(x => x.ISO2);
+                
+                if (sortColumn.Equals("iso3"))
+                    if (sortOrder.Equals("asc"))
+                        query = query.OrderBy(x => x.ISO3);
+                    else
+                        query = query.OrderByDescending(x => x.ISO3);
+            }
 
             var countries = new PagedList<Country>(query, pageIndex, pageSize);
             return countries;

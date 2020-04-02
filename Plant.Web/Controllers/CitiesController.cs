@@ -39,16 +39,19 @@ namespace Plant.Controllers
         {
             var cities = _cityService.GetAllCities(string.Empty, string.Empty, 0, pageIndex, pageSize, false);
 
-            var data = cities.Select(c => new CityDTO()
+            var data = new List<CityDTO>();
+            foreach (var c in cities)
             {
-                Id = c.Id,
-                Name = c.Name,
-                Lat = c.Latitude,
-                Lon = c.Longitude,
-                CountryId = c.Country.Id,
-                CountryName = c.Country.Name
-            }).ToList();
-
+                data.Add(new CityDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Lat = c.Latitude,
+                    Lon = c.Longitude,
+                    CountryId = c.CountryId,
+                    CountryName = c.Country != null ? c.Country.Name : string.Empty
+                });;
+            };
 
             return ApiResult<CityDTO>.CreateAsync(
                     data,

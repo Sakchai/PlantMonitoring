@@ -35,16 +35,20 @@ namespace Plant.Controllers
         string filterColumn = null,
         string filterQuery = null)
         {
-            var countries = _countryService.GetAllCountries(string.Empty, string.Empty, string.Empty, pageIndex, pageSize, false);
+            var countries = _countryService.GetAllCountries(pageIndex, pageSize, sortColumn,sortOrder,filterColumn,filterQuery);
 
-            var data = countries.Select(c => new CountryDTO()
+            var data = new List<CountryDTO>();
+            foreach (var c in countries)
             {
-                Id = c.Id,
-                Name = c.Name,
-                ISO2 = c.ISO2,
-                ISO3 = c.ISO3,
-                TotCities = c.Cities.Count
-            }).ToList();
+                data.Add(new CountryDTO
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    ISO2 = c.ISO2,
+                    ISO3 = c.ISO3,
+                    TotCities = 0
+                });
+            };
 
             return ApiResult<CountryDTO>.CreateAsync(
                     data,

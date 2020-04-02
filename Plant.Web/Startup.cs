@@ -12,6 +12,8 @@ using System.Text.Json;
 using Plant.Data;
 using Autofac;
 using Plant.Web;
+using Plant.Model;
+using Plant.Services;
 
 namespace Plant
 {
@@ -35,11 +37,37 @@ namespace Plant
             // You must have the call to AddAutofac in the Program.Main
             // method or this won't be called.
             builder.RegisterModule(new AutofacModule());
+
+            //using (var container = builder.Build())
+            //{
+            //    var studentService = container.Resolve<IStudentService>();
+            //    var cityService = container.Resolve<ICityService>();
+            //    var countryService = container.Resolve<ICountryService>();
+            //    var students = studentService.GetStudentsList();
+            //    foreach (var item in students)
+            //    {
+            //        System.Console.WriteLine($"{item.Id} {item.FirstName}");
+            //    }
+            //    var student = studentService.GetStudentByID(1);
+            //    System.Console.WriteLine($"{student.Id} {student.FirstName}");
+
+            //    var cities = cityService.GetCitysList();
+            //    foreach (var item in cities)
+            //    {
+            //        System.Console.WriteLine($"{item.Id} {item.Name}");
+            //    }
+            //    var counties = countryService.GetCountrysList();
+            //    foreach (var item in counties)
+            //    {
+            //        System.Console.WriteLine($"{item.Id} {item.Name}");
+            //    }
+            //}
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews()
                 .AddJsonOptions(options => {
