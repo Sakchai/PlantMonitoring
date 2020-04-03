@@ -56,13 +56,16 @@ namespace Plant.Model
 
         protected DataConnection GetOracleConnection(string uid, string password)
         {
+            //string connectionString = @"Data Source=""ORCL"";User Id=hr;Password=hr;";
             return GetOracleConnection(string.Format("Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = orcl.QIS.local)));User Id={0};Password={1};", uid, password));
+            //return GetOracleConnection(connectionString);
         }
 
         protected DataConnection GetOracleConnection(string connectionString)
         {
             //return OracleTools.CreateDataConnection(connectionString);
             connectionString = string.Format("Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = orcl.QIS.local)));User Id={0};Password={1};", "hr", "hr");
+            //connectionString = @"Data Source=""ORCL"";User Id=hr;Password=hr;";
             return new DataConnection(new OracleDataProvider("OracleManaged"), connectionString);
         }
 
@@ -77,7 +80,7 @@ namespace Plant.Model
                 throw new ArgumentNullException(nameof(dataProvider));
 
             var dataContext = new DataConnection(dataProvider, CreateDbConnection());
-            dataContext.AddMappingSchema(AdditionalSchema);
+           // dataContext.AddMappingSchema(AdditionalSchema);
 
 
 
@@ -326,6 +329,7 @@ namespace Plant.Model
         /// </summary>
         //protected string CurrentConnectionString => DataSettingsManager.LoadSettings().ConnectionString;
         protected string CurrentConnectionString => "Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA = (SERVER = DEDICATED)(SERVICE_NAME = orcl.QIS.local))); User Id =hr; Password=hr;";
+        //protected string CurrentConnectionString => @"Data Source=""ORCL"";User Id=hr;Password=hr;";
 
         /// <summary>
         /// Name of database provider

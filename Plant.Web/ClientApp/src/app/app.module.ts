@@ -15,7 +15,8 @@ import { CountryEditComponent } from './countries/country-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-
+import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     CitiesComponent,
     CityEditComponent,
     CountriesComponent,
-    CountryEditComponent
+    CountryEditComponent,
+    PieChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,11 +40,13 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
       { path: 'city', component: CityEditComponent },
       { path: 'countries', component: CountriesComponent },
       { path: 'country/:id', component: CountryEditComponent },
-      { path: 'country', component: CountryEditComponent }
+      { path: 'country', component: CountryEditComponent },
+      { path: 'pie-chart', component: PieChartComponent }
     ]),
     BrowserAnimationsModule,
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
     ],
   providers: [],
   bootstrap: [AppComponent]

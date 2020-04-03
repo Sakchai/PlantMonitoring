@@ -132,7 +132,7 @@ namespace Plant
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
-                spa.UseProxyToSpaDevelopmentServer("http://localhost:2801");
+               // spa.UseProxyToSpaDevelopmentServer("http://localhost:11119");
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");

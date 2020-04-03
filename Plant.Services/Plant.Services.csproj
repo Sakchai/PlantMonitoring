@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.60" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Plant.Model\Plant.Model.csproj" />
   </ItemGroup>
 

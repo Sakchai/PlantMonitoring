@@ -114,8 +114,8 @@ namespace Plant.Services
                 Id = x.Id,
                 CountryId = x.CountryId,
                 CountryName = _countryRepository.GetById(x.CountryId).Name,
-                Lat = x.Latitude,
-                Lon = x.Longitude,
+                Lat = x.Lat,
+                Lon = x.Lon,
                 Name = x.Name,
                 Name_ASCII = x.Name_ASCII
             });

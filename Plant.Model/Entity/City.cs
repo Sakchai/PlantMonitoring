@@ -36,13 +36,13 @@ namespace Plant.Model
         /// City latitude
         /// </summary>
         [Column("LAT",DbType = "decimal(7,4)"), NotNull]
-        public decimal Latitude { get; set; }
+        public decimal Lat { get; set; }
 
         /// <summary>
         /// City longitude
         /// </summary>
         [Column("LON",DbType = "decimal(7,4)"), NotNull]
-        public decimal Longitude { get; set; }
+        public decimal Lon { get; set; }
 
         /// <summary>
         /// Country Id (foreign key)

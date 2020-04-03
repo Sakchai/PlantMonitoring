@@ -10,6 +10,7 @@ using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.Oracle;
+using Oracle.ManagedDataAccess.Client;
 
 namespace Plant.Model
 {
@@ -78,7 +79,8 @@ namespace Plant.Model
         /// <returns>Connection to a database</returns>
         public override IDbConnection CreateDbConnection(string connectionString = null)
         {
-            return new SqlConnection(!string.IsNullOrEmpty(connectionString) ? connectionString : CurrentConnectionString);
+            //return new SqlConnection(!string.IsNullOrEmpty(connectionString) ? connectionString : CurrentConnectionString);
+            return new OracleConnection(!string.IsNullOrEmpty(connectionString) ? connectionString : CurrentConnectionString);
         }
 
         /// <summary>
@@ -99,13 +101,15 @@ namespace Plant.Model
             //now create connection string to 'master' dabatase. It always exists.
             builder.InitialCatalog = "master";
 
-            using (var connection = new SqlConnection(builder.ConnectionString))
+            //using (var connection = new SqlConnection(builder.ConnectionString))
+            using (var connection = new OracleConnection(builder.ConnectionString))
             {
                 var query = $"CREATE DATABASE [{databaseName}]";
                 if (!string.IsNullOrWhiteSpace(collation))
                     query = $"{query} COLLATE {collation}";
 
-                var command = new SqlCommand(query, connection);
+                //var command = new SqlCommand(query, connection);
+                var command = new OracleCommand(query, connection);
                 command.Connection.Open();
 
                 command.ExecuteNonQuery();
@@ -139,7 +143,8 @@ namespace Plant.Model
         {
             try
             {
-                using (var connection = new SqlConnection(GetConnectionStringBuilder().ConnectionString))
+                //using (var connection = new SqlConnection(GetConnectionStringBuilder().ConnectionString))
+                using (var connection = new OracleConnection(GetConnectionStringBuilder().ConnectionString))
                 {
                     //just try to connect
                     connection.Open();
@@ -262,6 +267,7 @@ namespace Plant.Model
                 throw new ArgumentNullException(nameof(con));
 
             return $"Data Source=(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = {con.ServerName})(PORT = {con.Port}))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = orcl.QIS.local)));User Id={con.Username};Password={con.Password};";
+
         }
 
         /// <summary>
